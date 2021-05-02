@@ -1,4 +1,4 @@
-# GIS Experiments
+# GIS Experiments (Python)
 
 *(Windows, non Anaconda)* Rasterio and GDAL install using whl files included (rather than from pypi). If not using python 3.8, see [here](https://rasterio.readthedocs.io/en/latest/installation.html#windows)
 
@@ -20,7 +20,7 @@ Unzip into `data/aerial/`
 runme_create_mosaic.py
 ```
 
-Merge/ mosaic all the tiles from sample into simple GeoJPEG of managable size, maintaining all GIS meta data of original.
+Merge/ mosaic all the tiles from sample into single GeoJPEG of managable size, maintaining all GIS meta data of original.
 
 Downsamples from 0.5m res to 2m and merges. Creates ~12MB file.
 

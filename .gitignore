@@ -1,5 +1,6 @@
 #data files
-data/
+data/*
+!data/aerial/readme.md
 
 
 # Byte-compiled / optimized / DLL files
