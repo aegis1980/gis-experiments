@@ -13,19 +13,17 @@ def test_driver(filePath: str, driver = None):
     ds = rasterio.open(filePath, driver = driver)
     show(ds, cmap='terrain')
 
-def filter_jpgs(path = DATA_ORIGINAL_PATH):
+def filter_jpgs(path = DATA_ORIGINAL_AERIALS_PATH):
     extension = '*.jpg'
 
-    q = os.path.join(DATA_ORIGINAL_PATH,extension)
+    q = os.path.join(path,extension)
 
-    # file paths matching RBG*.jpg
     return glob.glob(q)
-    # dataset = rasterio.open('data/aerial/RGB_AX33_10k_0402_2010.jpg')
 
 
 def mosaic(
         mosaic_res:int = 5,
-        src_path:str = DATA_ORIGINAL_PATH, 
+        src_path:str = DATA_ORIGINAL_AERIALS_PATH, 
         out_path:str = DATA_OUTPUT_PATH, 
         out_name:str = 'mosaic.jpg',
         show_when_done = True
@@ -62,7 +60,7 @@ def downsample(fp: str, full_path = True, factor = 0.1):
     but retains same resolution so no good for mosaic
     """
     if not full_path:
-        fp = os.path.join(DATA_ORIGINAL_PATH,fp)
+        fp = os.path.join(DATA_ORIGINAL_AERIALS_PATH,fp)
 
     fn = fp.split(os.path.sep)[-1]  
     f_out = os.path.join(DATA_OUTPUT_PATH,fn)

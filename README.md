@@ -14,10 +14,12 @@ pip install matlibplot
 
 Unzip into `data/aerial/`
 
+## Experiments
+
 ### Expt 1: Mosaic
 
 ```bash
-runme_create_mosaic.py
+python runme_create_mosaic.py
 ```
 
 Merge/ mosaic all the tiles from sample into single GeoJPEG of managable size, maintaining all GIS meta data of original.
@@ -30,6 +32,28 @@ Note that trying to merge original files without downsample will invariably caus
 
 Files are RGB (3 channels of 256 levels) and merges area's extend is ~173km x130km (345600 x 259200 @ 0.5,0.5m res). A `uint8` is 1 byte:
 
-```
+```bash
 [3 x (45600 x 259200) ] x 1 byte = 268.7 gigabytes
 ```
+
+### Expt 2: KML import
+
+Imports KML files I exported from my Google MyMaps to Geopandas dataframes and merges adjacent polygons.  I checked the KML export in MyMaps, it defaults to KMZ otherwise which works just as well, just KML Is just a textfile so more easily readable & debuggable.
+
+A couple of Python installs/imports. `fiona` from whl included as per previous:
+
+```
+pip install shapely, geopandas,pyshp
+pip install Fiona-1.8.19-cp38-cp38-win_amd64.whl
+```
+
+Then,
+
+```bash
+python runme_kml.py
+```
+
+Few issues with the KML importer I found [here](https://gist.github.com/linwoodc3/0306734dfe17076dfd34e09660c198c0`):
+
+- Works on the principal that each `<Placemark>`   `<name>`is unique. Names are not unique in the KMLs I exported from MyMaps which result in polygons going missing. I cleaned up by hands in the KML files (renaming duplicates). Could fix in code, someday.
+- Importers does not recognise KML `<Folders>` which are how MyMaps 'layers' are distinguished in exported KML.s I exported each layer into separate KML.
