@@ -62,18 +62,4 @@ Few issues with the KML importer I found [here](https://gist.github.com/linwoodc
 
 ### Expt 3: Coordinate systems
 
-```bash
-python runme_kml_crs.py
-```
-
-Imported KML (from Google MyMaps) does not have a coordinate system ('crs') - and there are many. Essentially different ways of plotting earth's surface.
-
-My aerial files are [NZGD2000 (or EPSG_2193)](https://epsg.io/2193). KML files I think* are WGS84().
-
-This experiment is just appreciating the difference playing with moving between the two.
-
-Also showed previous code for mosaicing was incorrect.
-
-### Expt 4: Raster masks
-
-Essentially: KML meet aerial raster. Aerial raster meet KML.
+Imported KML (from Google MyMaps) does not have a coordinate system - there are many.

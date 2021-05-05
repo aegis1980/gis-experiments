@@ -39,11 +39,24 @@ def mosaic(
 
     mosaic, out_trans = merge(srcfiles_to_mosaic, res=mosaic_res)    
 
-    profile = src.profile
-    profile.update(transform=out_trans, driver='JPEG')
+
+    # NOTE this breaks coordinated in merged file - slightly off
+    #profile = src.profile
+    #profile.update(transform=out_trans, driver='JPEG')
+
+    # NOTE ...so using this now
+    out_meta = src.meta.copy()
+    out_meta.update({   
+        "driver": "JPEG",
+        "height": mosaic.shape[1],
+        "width": mosaic.shape[2],
+        "transform": out_trans
+        }
+    )
+
 
     out_fp = os.path.join(out_path,out_name)
-    with rasterio.open(out_fp, "w", **profile) as dest:
+    with rasterio.open(out_fp, "w", **out_meta) as dest:
         dest.write(mosaic)
 
     if show_when_done:

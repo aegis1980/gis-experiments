@@ -149,7 +149,7 @@ class PlacemarkHandler(xml.sax.handler.ContentHandler):
                                    'altitude':g[-1]})
                 return points
             except:
-                print ('fail'  + row)
+                #print ('fail'  + row)
                 pass
             
         
