@@ -36,6 +36,8 @@ Files are RGB (3 channels of 256 levels) and merges area's extend is ~173km x130
 [3 x (45600 x 259200) ] x 1 byte = 268.7 gigabytes
 ```
 
+5/5/21 Update: Previous broke coords. now corrected and seems to work ok.
+
 ### Expt 2: KML import
 
 Imports KML files I exported from my Google MyMaps to Geopandas dataframes and merges adjacent polygons.  I checked the KML export in MyMaps, it defaults to KMZ otherwise which works just as well, just KML Is just a textfile so more easily readable & debuggable.
@@ -57,3 +59,21 @@ Few issues with the KML importer I found [here](https://gist.github.com/linwoodc
 
 - Works on the principal that each `<Placemark>`   `<name>`is unique. Names are not unique in the KMLs I exported from MyMaps which result in polygons going missing. I cleaned up by hands in the KML files (renaming duplicates). Could fix in code, someday.
 - Importers does not recognise KML `<Folders>` which are how MyMaps 'layers' are distinguished in exported KML.s I exported each layer into separate KML.
+
+### Expt 3: Coordinate systems
+
+```bash
+python runme_kml_crs.py
+```
+
+Imported KML (from Google MyMaps) does not have a coordinate system ('crs') - and there are many. Essentially different ways of plotting earth's surface.
+
+My aerial files are [NZGD2000 (or EPSG_2193)](https://epsg.io/2193). KML files I think* are WGS84().
+
+This experiment is just appreciating the difference playing with moving between the two.
+
+Also showed previous code for mosaicing was incorrect.
+
+### Expt 4: Raster masks
+
+Essentially: KML meet aerial raster. Aerial raster meet KML.
