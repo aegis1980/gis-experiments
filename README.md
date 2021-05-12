@@ -12,9 +12,17 @@ pip install matlibplot
 
 ## Source data
 
-0.5m resolution aerial images of Auckland. Download from [here](https://data.linz.govt.nz/layer/51769-auckland-05m-rural-aerial-photos-2010-2012/), selecting JPEG format. Download is fairly large (12 gig!) so takes a while.
+### Raster
 
-Unzip into `data/aerial/`
+ - 0.5m resolution aerial images of Auckland. Download from [here](https://data.linz.govt.nz/layer/51769-auckland-05m-rural-aerial-photos-2010-2012/), selecting JPEG format. Download is fairly large (12 gig!) so takes a while. Unzip into `data/aerial/`
+
+### Vector files
+
+- KML files: I made these myself in Google MyMaps 
+- LINZ website for NZ vector files
+- geofabrik.de for OpenStreetMap SHP files
+
+
 
 ## Experiments
 
@@ -89,9 +97,9 @@ I am learning that all GIS seems to kill my computer - too much data.
 
 ### Expt 6: OpenStreetMaps export clipping
 
-Found [this website](http://download.geofabrik.de) where you can download snapshots of OpenStreetMaps as SHP file. I using [this one for New Zealand](http://download.geofabrik.de/australia-oceania/new-zealand-latest-free.shp.zip) unzipped into `data/osm/'. I actaully tried to open in GRASS GIS and AutoCAD Maps. Computer spit the dummy with both.
+Found [this website](http://download.geofabrik.de) where you can download snapshots of OpenStreetMaps as SHP file. I using [this one for New Zealand](http://download.geofabrik.de/australia-oceania/new-zealand-latest-free.shp.zip) unzipped into `data/osm/'. I tried to open unedited in GRASS GIS, QGIS and AutoCAD Maps. Computer spat the dummy for all three.
 
-This notebook clips the files to a more manageable size and area.
+This experiment clips the files to a more manageable size and area using the mask created in expt4
 
 Needs `rtree` for the clipping operation
 
