@@ -1,6 +1,8 @@
 # GIS Experiments (Python)
 
-*(Windows, non Anaconda)* Rasterio and GDAL install using whl files included (rather than from pypi). If not using python 3.8, see [here](https://rasterio.readthedocs.io/en/latest/installation.html#windows)
+*(Windows, non Anaconda)* GDAL, Rasterio, Fiona and RTree install using whl files included (rather than from pypi) - installing from whl files includes binaries.
+
+If not using Python 3.8x then your will need to d/l appropriate whl files from here
 
 ```bash
 pip install GDAL-3.2.2-cp38-cp38-win_amd64.whl
@@ -19,7 +21,7 @@ Unzip into `data/aerial/`
 ### Expt 1: Mosaic
 
 ```bash
-python runme_create_mosaic.py
+python expt1_create_mosaic.py
 ```
 
 Merge/ mosaic all the tiles from sample into single GeoJPEG of managable size, maintaining all GIS meta data of original.
@@ -52,7 +54,7 @@ pip install Fiona-1.8.19-cp38-cp38-win_amd64.whl
 Then,
 
 ```bash
-python runme_kml.py
+python runme_kml_import.py
 ```
 
 Few issues with the KML importer I found [here](https://gist.github.com/linwoodc3/0306734dfe17076dfd34e09660c198c0`):
@@ -62,4 +64,37 @@ Few issues with the KML importer I found [here](https://gist.github.com/linwoodc
 
 ### Expt 3: Coordinate systems
 
-Imported KML (from Google MyMaps) does not have a coordinate system - there are many.
+```bash
+python expt3_kml_crs
+```
+
+Imported KML (from Google MyMaps) does not have a coordinate system included in file, turns out its WSG84 (EPSG:4326). Aerial data from aerial photo is NZ Transverse Mercator 2000(NZTM, NZGD2000, EPSG:2193).
+
+This experiment just assigns correct crs to imported kml data & transforms to NZTM.
+
+### Expt 4: KML rastermask
+
+```bash
+python expt3_kml_rastermask
+```
+
+Creates a rastermask from kml vector geometry and applies to aerial mosaic. Masked areas are assigned 'no data' (or something like that)
+
+### Expt 5: Figure ground experiments
+
+Bit of a change a tack: now using Jupyter notebooks to run files inline (in VS Code).
+This experiment uses buildind outline data from LINZ, exported a SHP file from [website](https://data.linz.govt.nz/layer/101290-nz-building-outlines/). Set bound box on very small area for export since kills computer otherwise.
+
+I am learning that all GIS seems to kill my computer - too much data.
+
+### Expt 6: OpenStreetMaps export clipping
+
+Found [this website](http://download.geofabrik.de) where you can download snapshots of OpenStreetMaps as SHP file. I using [this one for New Zealand](http://download.geofabrik.de/australia-oceania/new-zealand-latest-free.shp.zip) unzipped into `data/osm/'. I actaully tried to open in GRASS GIS and AutoCAD Maps. Computer spit the dummy with both.
+
+This notebook clips the files to a more manageable size and area.
+
+Needs `rtree` for the clipping operation
+
+```bash
+pip install Rtree-0.9.7-cp38-cp38-win_amd64.whl
+```
