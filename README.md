@@ -1,32 +1,48 @@
 # GIS Experiments (Python)
 
-*(Windows, non Anaconda)* GDAL, Rasterio, Fiona and RTree install using whl files included (rather than from pypi) - installing from whl files includes binaries.
+I decided to have a play with GIS and Python. This is a record of where I got and didn't get here.
 
-If not using Python 3.8x then your will need to d/l appropriate whl files from here
+No real end goal, but maybe useful to someone. **Come along for the ride**!
+
+Prior to this I had tried using Anaconda (C/C++ binaries are all packaged up) for GIS stuff but just didn't get on with it. So, experiments below are based on 'vanilla' `pip` python3.8 running on Windows10 (64 bit).
+
+This does mean I had to find `whl` files that included binaries for some libraries, but I found this in a funny way 'easier' that Anaconda.
+
+On linux? Easy for you, I think.
+
+## Installing from local WHl file
+
+So, GDAL, Rasterio, Fiona and RTree install using the `*.whl` files included (rather than from pypi). Installing from whl files includes the required compiled C/C++ binaries. If you install this libraries from pypi, it will not come with binaries and you will sink in error messages.
+
+I have included the `whl` files. If not using Python 3.8x (eg 3.9) then your will need to d/l appropriate whl files (or just setup a 3.8 venv). I got the files here.
+
+### Installation of whl files:
 
 ```bash
 pip install GDAL-3.2.2-cp38-cp38-win_amd64.whl
 pip install rasterio-1.2.3-cp38-cp38-win_amd64.whl
-pip install matlibplot
+...etc
 ```
 
 ## Source data
 
+I live in Auckland, NZ so I am using data relevant to here. Am sure you can get equivalent data for other places. Below is the running list of data sources.
+
 ### Raster
 
- - 0.5m resolution aerial images of Auckland. Download from [here](https://data.linz.govt.nz/layer/51769-auckland-05m-rural-aerial-photos-2010-2012/), selecting JPEG format. Download is fairly large (12 gig!) so takes a while. Unzip into `data/aerial/`
+- 0.5m resolution aerial images of Auckland. Download from [here](https://data.linz.govt.nz/layer/51769-auckland-05m-rural-aerial-photos-2010-2012/), selecting JPEG format. Download is fairly large (12 gig!) so takes a while. Unzip into `data/aerial/`
 
 ### Vector files
 
-- KML files: I made these myself in Google MyMaps 
+- KML files: I made these myself in Google MyMaps
 - LINZ website for NZ vector files
 - geofabrik.de for OpenStreetMap SHP files
 
 
 
-## Experiments
+# The Experiments
 
-### Expt 1: Mosaic
+## Expt 1: Mosaic
 
 ```bash
 python expt1_create_mosaic.py
@@ -48,7 +64,7 @@ Files are RGB (3 channels of 256 levels) and merges area's extend is ~173km x130
 
 5/5/21 Update: Previous broke coords. now corrected and seems to work ok.
 
-### Expt 2: KML import
+## Expt 2: KML import
 
 Imports KML files I exported from my Google MyMaps to Geopandas dataframes and merges adjacent polygons.  I checked the KML export in MyMaps, it defaults to KMZ otherwise which works just as well, just KML Is just a textfile so more easily readable & debuggable.
 
@@ -70,7 +86,7 @@ Few issues with the KML importer I found [here](https://gist.github.com/linwoodc
 - Works on the principal that each `<Placemark>`   `<name>`is unique. Names are not unique in the KMLs I exported from MyMaps which result in polygons going missing. I cleaned up by hands in the KML files (renaming duplicates). Could fix in code, someday.
 - Importers does not recognise KML `<Folders>` which are how MyMaps 'layers' are distinguished in exported KML.s I exported each layer into separate KML.
 
-### Expt 3: Coordinate systems
+## Expt 3: Coordinate systems
 
 ```bash
 python expt3_kml_crs
@@ -80,7 +96,7 @@ Imported KML (from Google MyMaps) does not have a coordinate system included in 
 
 This experiment just assigns correct crs to imported kml data & transforms to NZTM.
 
-### Expt 4: KML rastermask
+## Expt 4: KML rastermask
 
 ```bash
 python expt3_kml_rastermask
@@ -88,14 +104,14 @@ python expt3_kml_rastermask
 
 Creates a rastermask from kml vector geometry and applies to aerial mosaic. Masked areas are assigned 'no data' (or something like that)
 
-### Expt 5: Figure ground experiments
+## Expt 5: Figure ground experiments
 
 Bit of a change a tack: now using Jupyter notebooks to run files inline (in VS Code).
 This experiment uses buildind outline data from LINZ, exported a SHP file from [website](https://data.linz.govt.nz/layer/101290-nz-building-outlines/). Set bound box on very small area for export since kills computer otherwise.
 
 I am learning that all GIS seems to kill my computer - too much data.
 
-### Expt 6: OpenStreetMaps export clipping
+## Expt 6: OpenStreetMaps export clipping
 
 Found [this website](http://download.geofabrik.de) where you can download snapshots of OpenStreetMaps as SHP file. I using [this one for New Zealand](http://download.geofabrik.de/australia-oceania/new-zealand-latest-free.shp.zip) unzipped into `data/osm/'. I tried to open unedited in GRASS GIS, QGIS and AutoCAD Maps. Computer spat the dummy for all three.
 
