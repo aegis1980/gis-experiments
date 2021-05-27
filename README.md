@@ -126,17 +126,19 @@ pip install Rtree-0.9.7-cp38-cp38-win_amd64.whl
 
 **🌊 A real sidestep into the bizarre world of R**
 
-In NZ - february 2021 - we has some Tsunami warnings from offshore quakes. No ill-effects from quakes as far as i know, and afterwards I got to thinking about the travel time and speeds of tsunamis.
+In NZ - February 2021 - we had some tsunami warnings from offshore quakes. No ill-effects from quakes as far as I know, and afterwards I got to thinking about the travel time and speeds of tsunamis.
 
-First attempt just took the great circle line between event and point of interest, pinged Google Maps Elevations API for depths along this path and then using $v(d)=\sqrt{g} \times d$  (large wavelength of tsumami means its ~ acts as shallow wave). Event info was retrieved from USGS Api. The predicted arrival time was a fair way off the actual arrival times (measured at wave buoys off NZ coast).
+First attempt just took the great circle line between event and point of interest, pinged Google Maps Elevations API for depths along this path and then applyed this equation, `c = sqrt(g.d) ~ 3.13 x sqrt(d) `, for the approximate speed of the wave.
 
-An issue (I thought) was the as-the-crow path is unlikely to be the fastest path since waves will travel faster in deep water. Computationally this least-cost route problem is a bit more challenging.
+Event info was retrieved from USGS Api. Anyway, the predicted arrival time was a fair way off the actual arrival times (measured at wave buoys off NZ coast) so I scrapped this approach.
 
-To cut a long story short, this was my first foray into GIS, prior to these experiments and I did not get very far (mainly getting my Windows machine to play with various Python GIS-realted libraries).
+One issue (I thought) was the as-the-crow path is unlikely to be the fastest path since waves will travel faster in deep water. Computationally this least-cost route problem is a bit more challenging.
 
-I have since kind of worked the Python but (hence these experiements) by using precompiled whl files. Armed with this I thought i might tackle the Tsunami problem again.
+To cut a long story short, this was my first foray into GIS, prior to these experiments and I did not get very far (mainly getting my Windows machine to play with various Python GIS-related libraries).
 
-Unfortunately not, not in Python-on-Windows anyway. I have solved it in R though and consequently code for experiment 7 is all in R (and subsequently massively bizarre!).
+Having since kind of worked out Python issues (hence these experiments) by using precompiled whl files, I thought i might tackle my tsunami problem again.
+
+Unfortunately not, not using Python-on-Windows anyway. I have 'solved it' in R though and consequently code for experiment 7 is all in R (and subsequently massively bizarre!).
 
 1. Data from here.
 
@@ -147,14 +149,12 @@ Unfortunately not, not in Python-on-Windows anyway. I have solved it in R though
    * `expt7a_prep_conductance_frm_bathy.R` This prepares the conductance transition layer from the bathmetric data and saves to `data/out/conductance.rds`. This step takes a while but once done is done, hence the *save to file*.
    * `expt7b_shortest_bathy_pth.R`. Reloads the data (could hash this out if in memory already) and solves the rest of the problem for an event at location A (defined using event code from USGC) and point of interest B (defined as latlng). Needless to say, both event and POI need to be within bounds of map!
 
-   One could do a little more with this (like check its more accurate, for instance). Perhaps next time there is a tsunami warning?🌊
+   One could do a lot more with this (starting with checking its accuracy, for instance!). Perhaps next time there is a tsunami warning?🌊The equation quoted above, I believe, models a *non-dispersive linear wave* but other models will be more applicable in other scenarios, for instance when the tsunami begins to shoal in shallower water near the coast ([ref here](/img/hammack1978.pdf))
 
 ### Output
 
-Image below is est 'first wave' path tracked from [the May2020 Kermadec M8.1 quake](https://earthquake.usgs.gov/earthquakes/eventpage/us7000dflf/executive) to Lottin Point (the 'East Cape' wave buoy).
+Image below is est 'first wave' path tracked from [the May2020 Kermadec M8.1 quake](https://earthquake.usgs.gov/earthquakes/eventpage/us7000dflf/executive) to [Lottin point wave buoy] (https://www.researchgate.net/figure/Locations-of-sea-level-gauge-stations-around-New-Zealand-and-other-locations-mentioned-in_fig1_256422330).
 
-Contours are hours. 
-
-Kind of cool how it tracks along (what i think is) the Marinas Trench eh? 
+Contours are hours.
 
 ![alt text](img/wave_path.png "Logo Title Text 1")
